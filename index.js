@@ -26,26 +26,18 @@ class EyeController {
     return this;
   }
 
-  _createKeyframes ({
+  _createKeyframes({
     tgtTranYVal = 0,
     tgtRotVal = 0,
-    enteredOffset = 1/3,
-    exitingOffset = 2/3,
   } = {}) {
     return [
-      {transform: `translateY(0px) rotate(0deg)`, offset: 0.0},
-      {transform: `translateY(${tgtTranYVal}) rotate(${tgtRotVal})`, offset: enteredOffset},
-      {transform: `translateY(${tgtTranYVal}) rotate(${tgtRotVal})`, offset: exitingOffset},
-      {transform: `translateY(0px) rotate(0deg)`, offset: 1.0},
+      { transform: `translateY(${tgtTranYVal}) rotate(${tgtRotVal})` },
     ];
   }
 
   express({
     type = '',
-    // level = 3,  // 1: min, 5: max
-    duration = 1000,
-    enterDuration = 75,
-    exitDuration = 75,
+    duration = 500,
   }) {
     if (!this._leftEye) {  // assumes all elements are always set together
       console.warn('Eye elements are not set; return;');
@@ -54,54 +46,91 @@ class EyeController {
 
     const options = {
       duration: duration,
+      fill: "forwards",
     };
 
-    switch(type) {
+    switch (type) {
+      case 'normal':
+        return {
+          upperLeftEyelid: this._upperLeftEyelid.animate(this._createKeyframes({
+            tgtTranYVal: 0,
+            tgtRotVal: 0,
+          }), options),
+          upperRightEyelid: this._upperRightEyelid.animate(this._createKeyframes({
+            tgtTranYVal: 0,
+            tgtRotVal: 0,
+          }), options),
+          lowerLeftEyelid: this._lowerLeftEyelid.animate(this._createKeyframes({
+            tgtTranYVal: 0,
+            tgtRotVal: 0,
+          }), options),
+          lowerRightEyelid: this._lowerRightEyelid.animate(this._createKeyframes({
+            tgtTranYVal: 0,
+            tgtRotVal: 0,
+          }), options),
+        };
+
       case 'happy':
         return {
+          //position reset
+          upperLeftEyelid: this._upperLeftEyelid.animate(this._createKeyframes({
+            tgtTranYVal: 0,
+            tgtRotVal: 0,
+          }), options),
+          upperRightEyelid: this._upperRightEyelid.animate(this._createKeyframes({
+            tgtTranYVal: 0,
+            tgtRotVal: 0,
+          }), options),
+          //main
           lowerLeftEyelid: this._lowerLeftEyelid.animate(this._createKeyframes({
             tgtTranYVal: `calc(${this._eyeSize} * -2 / 3)`,
             tgtRotVal: `30deg`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
           }), options),
           lowerRightEyelid: this._lowerRightEyelid.animate(this._createKeyframes({
             tgtTranYVal: `calc(${this._eyeSize} * -2 / 3)`,
             tgtRotVal: `-30deg`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
           }), options),
         };
 
       case 'sad':
         return {
+          //main
           upperLeftEyelid: this._upperLeftEyelid.animate(this._createKeyframes({
             tgtTranYVal: `calc(${this._eyeSize} * 1 / 3)`,
             tgtRotVal: `-20deg`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
           }), options),
           upperRightEyelid: this._upperRightEyelid.animate(this._createKeyframes({
             tgtTranYVal: `calc(${this._eyeSize} * 1 / 3)`,
             tgtRotVal: `20deg`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
+          }), options),
+          lowerLeftEyelid: this._lowerLeftEyelid.animate(this._createKeyframes({
+            tgtTranYVal: 0,
+            tgtRotVal: 0,
+          }), options),
+          lowerRightEyelid: this._lowerRightEyelid.animate(this._createKeyframes({
+            tgtTranYVal: 0,
+            tgtRotVal: 0,
           }), options),
         };
 
       case 'angry':
         return {
+          //main
           upperLeftEyelid: this._upperLeftEyelid.animate(this._createKeyframes({
             tgtTranYVal: `calc(${this._eyeSize} * 1 / 4)`,
             tgtRotVal: `30deg`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
           }), options),
           upperRightEyelid: this._upperRightEyelid.animate(this._createKeyframes({
             tgtTranYVal: `calc(${this._eyeSize} * 1 / 4)`,
             tgtRotVal: `-30deg`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
+          }), options),
+          lowerLeftEyelid: this._lowerLeftEyelid.animate(this._createKeyframes({
+            tgtTranYVal: 0,
+            tgtRotVal: 0,
+          }), options),
+          lowerRightEyelid: this._lowerRightEyelid.animate(this._createKeyframes({
+            tgtTranYVal: 0,
+            tgtRotVal: 0,
           }), options),
         };
 
@@ -109,35 +138,17 @@ class EyeController {
         return {
           upperLeftEyelid: this._upperLeftEyelid.animate(this._createKeyframes({
             tgtTranYVal: `calc(${this._eyeSize} * 1 / 3)`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
           }), options),
           upperRightEyelid: this._upperRightEyelid.animate(this._createKeyframes({
             tgtTranYVal: `calc(${this._eyeSize} * 1 / 3)`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
           }), options),
           lowerLeftEyelid: this._lowerLeftEyelid.animate(this._createKeyframes({
             tgtTranYVal: `calc(${this._eyeSize} * -1 / 3)`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
           }), options),
           lowerRightEyelid: this._lowerRightEyelid.animate(this._createKeyframes({
             tgtTranYVal: `calc(${this._eyeSize} * -1 / 3)`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
           }), options),
-        }
-
-      case 'confused':
-        return {
-          upperRightEyelid: this._upperRightEyelid.animate(this._createKeyframes({
-            tgtTranYVal: `calc(${this._eyeSize} * 1 / 3)`,
-            tgtRotVal: `-10deg`,
-            enteredOffset: enterDuration / duration,
-            exitingOffset: 1 - (exitDuration / duration),
-          }), options),
-        }
+        };
 
       default:
         console.warn(`Invalid input type=${type}`);
@@ -154,9 +165,9 @@ class EyeController {
 
     [this._leftEye, this._rightEye].map((eye) => {
       eye.animate([
-        {transform: 'rotateX(0deg)'},
-        {transform: 'rotateX(90deg)'},
-        {transform: 'rotateX(0deg)'},
+        { transform: 'rotateX(0deg)' },
+        { transform: 'rotateX(90deg)' },
+        { transform: 'rotateX(0deg)' },
       ], {
         duration,
         iterations: 1,
@@ -195,11 +206,11 @@ class EyeController {
       if (!isRight) {
         eyeElem.style.left = `calc(${this._eyeSize} / 3 * 2 * ${x})`;
       } else {
-        eyeElem.style.right = `calc(${this._eyeSize} / 3 * 2 * ${1-x})`;
+        eyeElem.style.right = `calc(${this._eyeSize} / 3 * 2 * ${1 - x})`;
       }
     }
     if (!!y) {
-      eyeElem.style.bottom = `calc(${this._eyeSize} / 3 * 2 * ${1-y})`;
+      eyeElem.style.bottom = `calc(${this._eyeSize} / 3 * 2 * ${1 - y})`;
     }
   }
 }
