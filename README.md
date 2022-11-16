@@ -1,4 +1,4 @@
-# Tablet Robot Face
+#  Robot Face
 
 Expressive robot face designed for tablets.
 
