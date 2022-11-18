@@ -1,10 +1,10 @@
 :root {
-  --face-color: whitesmoke;
+  --face-color: black;
   --face-height: 100vh;
   --face-width: 100vw;
-  --eye-size: 33.33vmin;
+  --eye-size: 50vmin; /*33.33vmin*/
   --eye-color: black;
-  --eyelid-color: whitesmoke;
+  --eyelid-color: black;
 }
 
 body {
@@ -33,9 +33,11 @@ body {
 .eye {
   background-color: var(--eye-color);
   border-radius: 100%;
+  border: 3em solid whitesmoke;
+  box-sizing:border-box;
   height: var(--eye-size);
   width: var(--eye-size);
-  bottom: calc(var(--eye-size) / 3);
+  bottom: calc(var(--eye-size) / 10);
   z-index: 1;
   transform: rotateX(0);
 }

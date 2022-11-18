@@ -212,3 +212,5 @@ const eyes = new EyeController({
   lowerLeftEyelid: document.querySelector('.left .eyelid.lower'),
   lowerRightEyelid: document.querySelector('.right .eyelid.lower'),
 });
+
+eyes.startBlinking();
